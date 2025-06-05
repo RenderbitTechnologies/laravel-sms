@@ -1,5 +1,5 @@
 {
-    
+    "name": "renderbit/laravel-sms",
     "version": "1.0.0",
     "description": "Framework-agnostic PHP library for sending SMS via Renderbit, with Laravel support.",
     "type": "library",
