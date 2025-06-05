@@ -1,0 +1,37 @@
+{
+    
+    "version": "1.0.0",
+    "description": "Framework-agnostic PHP library for sending SMS via Renderbit, with Laravel support.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["sms", "text", "laravel", "renderbit", "api", "messaging"],
+    "homepage": "https://github.com/renderbit/laravel-sms",
+    "support": {
+        "issues": "https://github.com/RenderbitTechnologies/laravel-sms/issues",
+        "source": "https://github.com/RenderbitTechnologies/laravel-sms"
+    },
+    "authors": [
+        {
+            "name": "Aditya V Jajodia",
+            "email": "aditya.v.jajodia@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Renderbit\\Sms\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Renderbit\\Sms\\SmsServiceProvider"
+            ],
+            "aliases": {
+                "Sms" : "Renderbit\\Sms\\Facades\\Sms"
+            }
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.0"
+    }
+}
