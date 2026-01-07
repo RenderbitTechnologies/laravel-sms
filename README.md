@@ -2,8 +2,6 @@
 
 A Laravel package to send transactional SMS messages through supported SMS gateways. Built with simplicity, scalability, and performance in mind.
 
----
-
 ## 🚀 Features
 
 * Simple API to send SMS
@@ -13,8 +11,6 @@ A Laravel package to send transactional SMS messages through supported SMS gatew
 * Laravel-native configuration and logging
 * Facade & dependency injection support
 
----
-
 ## 📦 Installation
 
 Install via Composer:
@@ -22,8 +18,6 @@ Install via Composer:
 ```bash
 composer require renderbit/laravel-sms
 ```
-
----
 
 ## 🛠 Configuration
 
@@ -65,8 +59,6 @@ SMS_NUMBER_FIELD='number'
 SMS_MESSAGE_FIELD='text'
 ```
 
----
-
 ## ✉️ Usage
 
 You can send an SMS using the facade or the `SmsClient` class:
@@ -95,8 +87,6 @@ class NotificationService
 }
 ```
 
----
-
 ## ✅ Example Response Handling
 
 The `send` method returns a `bool`:
@@ -109,8 +99,6 @@ if (!$success) {
 }
 ```
 
----
-
 ## 🧪 Testing
 
 To fake SMS sending during tests:
@@ -122,8 +110,6 @@ Sms::shouldReceive('send')
     ->andReturn(true);
 ```
 
----
-
 ## 📁 Directory Structure (Core)
 
 * `SmsClient`: Main entry point, handles sms sending logic.
@@ -131,16 +117,10 @@ Sms::shouldReceive('send')
 * `config\sms`: Default configs that can be overridden after publishing.
 * `SmsServiceProvider`: Auto-discovery and binding.
 
----
-
 ## 🤝 Contributing
 
 Pull requests are welcome! For major changes, please open an issue first to discuss what you’d like to change.
 
----
-
 ## 📄 License
 
 This package is open-sourced software licensed under the [MIT license](LICENSE).
-
----
