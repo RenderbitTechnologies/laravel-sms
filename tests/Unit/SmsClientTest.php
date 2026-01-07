@@ -8,6 +8,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Log;
 use Mockery;
+use PHPUnit\Framework\Attributes\Test;
 use Renderbit\Sms\SmsClient;
 use Renderbit\Sms\Tests\TestCase;
 
@@ -19,7 +20,7 @@ class SmsClientTest extends TestCase
         parent::tearDown();
     }
 
-    /** @test */
+    #[Test]
     public function it_sends_sms_successfully()
     {
         // Mock Guzzle Client
@@ -51,7 +52,7 @@ class SmsClientTest extends TestCase
         $this->assertEquals('Hello John', $query['msg']);
     }
 
-    /** @test */
+    #[Test]
     public function it_logs_when_sms_is_disabled()
     {
         Log::shouldReceive('info')
@@ -87,7 +88,7 @@ class SmsClientTest extends TestCase
         $_SERVER['SMS_ENABLED'] = true;
     }
 
-    /** @test */
+    #[Test]
     public function it_handles_exceptions_gracefully()
     {
         putenv('SMS_ENABLED=true');
