@@ -1,5 +1,10 @@
 # Laravel SMS
 
+[![Tests](https://github.com/RenderbitTechnologies/laravel-sms/actions/workflows/tests.yml/badge.svg)](https://github.com/RenderbitTechnologies/laravel-sms/actions/workflows/tests.yml)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/renderbit/laravel-sms.svg?style=flat-square)](https://packagist.org/packages/renderbit/laravel-sms)
+[![PHP Version](https://img.shields.io/packagist/php-v/renderbit/laravel-sms.svg?style=flat-square)](https://packagist.org/packages/renderbit/laravel-sms)
+[![License](https://img.shields.io/packagist/l/renderbit/laravel-sms.svg?style=flat-square)](https://packagist.org/packages/renderbit/laravel-sms)
+
 A Laravel package to send transactional SMS messages through supported SMS gateways. Built with simplicity, scalability, and performance in mind.
 
 ## 🚀 Features
