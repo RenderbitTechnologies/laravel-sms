@@ -2,6 +2,7 @@
 
 namespace Renderbit\Sms;
 
+use GuzzleHttp\Client;
 use Renderbit\Sms\SmsClient;
 use Illuminate\Support\ServiceProvider;
 
@@ -12,7 +13,7 @@ class SmsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(SmsClient::class, fn() => new SmsClient());
+        $this->app->singleton(SmsClient::class, fn() => new SmsClient(new Client()));
     }
 
     /**
