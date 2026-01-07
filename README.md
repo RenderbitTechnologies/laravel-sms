@@ -144,5 +144,3 @@ Pull requests are welcome! For major changes, please open an issue first to disc
 This package is open-sourced software licensed under the [MIT license](LICENSE).
 
 ---
-
-Would you like me to initialize this as a `README.md` file inside your package or also help with directory scaffolding like `src/SmsClient.php`, `Contracts`, etc.?
