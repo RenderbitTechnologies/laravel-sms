@@ -10,9 +10,9 @@ class SmsClient
     protected Client $client;
     protected string $url;
 
-    public function __construct()
+    public function __construct(Client $client = null)
     {
-        $this->client = new Client();
+        $this->client = $client ?? new Client();
         $this->url = config('sms.url');
     }
 
