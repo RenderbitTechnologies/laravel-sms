@@ -97,14 +97,42 @@ jobs:
 
           echo "tag=$NEW_TAG" >> $GITHUB_OUTPUT
 
+      - name: Bump Version
+        env:
+          NEW_TAG: ${{ steps.tag_calc.outputs.tag }}
+        run: |
+          # Configure Git
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Extract version number (remove 'v')
+          VERSION=${NEW_TAG#v}
+          echo "Bumping version to $VERSION"
+
+          # Update composer.json
+          sed -i 's/"version": "[^"]*"/"version": "'$VERSION'"/' composer.json
+
+          # Update composer.lock
+          composer update --lock
+
+          # Commit and Push
+          git add composer.json composer.lock
+          git commit -m "Bump version to $NEW_TAG"
+          git push origin HEAD:master
+
+          # Output the new commit SHA
+          echo "commit_sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+        id: bump_version
+
       - name: Create Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           NEW_TAG="${{ steps.tag_calc.outputs.tag }}"
-          echo "Creating release for tag: $NEW_TAG"
+          COMMIT_SHA="${{ steps.bump_version.outputs.commit_sha }}"
+          echo "Creating release for tag: $NEW_TAG on commit $COMMIT_SHA"
 
           gh release create "$NEW_TAG" \
-            --target master \
+            --target "$COMMIT_SHA" \
             --generate-notes \
             --title "$NEW_TAG"
