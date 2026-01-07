@@ -13,7 +13,11 @@
     "authors": [
         {
             "name": "Aditya V Jajodia",
-            "email": "aditya.v.jajodia@gmail.com"
+            "email": "aditya@renderbit.com"
+        },
+        {
+            "name": "Soham Banerjee",
+            "email": "soham@renderbit.com"
         }
     ],
     "autoload": {
@@ -37,6 +41,7 @@
         }
     },
     "require": {
+        "php": "^8.1",
         "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
