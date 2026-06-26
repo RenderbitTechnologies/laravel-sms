@@ -13,24 +13,10 @@ use Renderbit\Sms\Tests\TestCase;
 
 class SmsIntegrationTest extends TestCase
 {
-    private function enableSms(): void
-    {
-        putenv('SMS_ENABLED=true');
-        $_ENV['SMS_ENABLED'] = true;
-        $_SERVER['SMS_ENABLED'] = true;
-    }
-
-    private function disableSms(): void
-    {
-        putenv('SMS_ENABLED=false');
-        $_ENV['SMS_ENABLED'] = false;
-        $_SERVER['SMS_ENABLED'] = false;
-    }
-
     #[Test]
     public function it_sends_sms_through_the_container()
     {
-        $this->enableSms();
+        config(['sms.enabled' => true]);
 
         $mock = new MockHandler([
             new Response(200, [], 'OK'),
@@ -60,7 +46,7 @@ class SmsIntegrationTest extends TestCase
     #[Test]
     public function it_sends_sms_through_facade_via_container()
     {
-        $this->enableSms();
+        config(['sms.enabled' => true]);
 
         $mock = new MockHandler([
             new Response(200, [], 'OK'),
@@ -87,7 +73,7 @@ class SmsIntegrationTest extends TestCase
     #[Test]
     public function it_applies_environment_configuration()
     {
-        $this->disableSms();
+        config(['sms.enabled' => false]);
 
         $client = \Mockery::mock(Client::class);
         $client->shouldNotReceive('get');

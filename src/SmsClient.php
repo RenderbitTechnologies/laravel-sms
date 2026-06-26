@@ -21,10 +21,10 @@ class SmsClient
         try {
             // Replace {{ key }} with values from $params
             foreach ($params as $key => $value) {
-                $message = str_replace('{{ ' . $key . ' }}', $value, $message);
+                $message = str_replace('{{ ' . $key . ' }}', (string) $value, $message);
             }
 
-            if (env('SMS_ENABLED', false)) {
+            if (config('sms.enabled')) {
                 $this->client->get($this->url, [
                     'query' => array_merge(config('sms.query_params'), [
                         config('sms.number_field') => $number,
@@ -32,7 +32,7 @@ class SmsClient
                     ])
                 ]);
             } else {
-                Log::info('Sms sending is disabled. You can enable it by setting the env key SMS_ENABLED with the boolean value true.');
+                Log::info('Sms sending is disabled. You can enable it by setting the config key sms.enabled to true.');
                 Log::info('Text: ' . $message . '| Phone Number: ' . $number);
             }
 

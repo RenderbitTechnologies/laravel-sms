@@ -20,9 +20,7 @@ class SmsFacadeTest extends TestCase
     public function it_forwards_calls_to_smsclient()
     {
         config(['sms.url' => 'http://example.com/api']);
-        putenv('SMS_ENABLED=false');
-        $_ENV['SMS_ENABLED'] = false;
-        $_SERVER['SMS_ENABLED'] = false;
+        config(['sms.enabled' => false]);
 
         // Should log instead of sending when disabled
         $result = Sms::send('1234567890', 'Facade test');
