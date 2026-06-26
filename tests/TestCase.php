@@ -17,6 +17,7 @@ class TestCase extends Orchestra
     protected function getEnvironmentSetUp($app)
     {
         // Setup default config
+        $app['config']->set('sms.enabled', true);
         $app['config']->set('sms.url', 'http://example.com/api/send');
         $app['config']->set('sms.query_params', [
             'user' => 'test_user',

@@ -8,9 +8,16 @@
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
         </testsuite>
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory>src</directory>
+        </include>
+    </source>
     <php>
         <env name="APP_ENV" value="testing"/>
-        <env name="SMS_ENABLED" value="true"/>
     </php>
 </phpunit>
