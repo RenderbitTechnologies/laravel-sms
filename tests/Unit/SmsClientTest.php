@@ -165,10 +165,6 @@ class SmsClientTest extends TestCase
             ->once()
             ->with('Text: Hello John| Phone Number: 1234567890');
 
-        Log::shouldReceive('info')
-            ->once()
-            ->with('SMS sent to 1234567890');
-
         // Disable SMS via config
         config(['sms.enabled' => false]);
 
@@ -214,43 +210,39 @@ class SmsClientTest extends TestCase
     }
 
     #[Test]
-    public function it_handles_empty_number()
+    public function it_rejects_empty_number()
     {
         config(['sms.enabled' => true]);
-        config(['sms.url' => 'http://example.com/api']);
 
-        $mock = new MockHandler([new Response(200, [], 'OK')]);
-        $handlerStack = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handlerStack]);
+        $client = Mockery::mock(Client::class);
+        $client->shouldNotReceive('get');
+
+        Log::shouldReceive('warning')
+            ->once()
+            ->with('SMS not sent: number or message is empty.');
 
         $sms = new SmsClient($client);
         $result = $sms->send('', 'Message with empty number');
 
-        $this->assertTrue($result);
-
-        $lastRequest = $mock->getLastRequest();
-        parse_str($lastRequest->getUri()->getQuery(), $query);
-        $this->assertEquals('', $query['mobile']);
+        $this->assertFalse($result);
     }
 
     #[Test]
-    public function it_handles_empty_message()
+    public function it_rejects_empty_message()
     {
         config(['sms.enabled' => true]);
-        config(['sms.url' => 'http://example.com/api']);
 
-        $mock = new MockHandler([new Response(200, [], 'OK')]);
-        $handlerStack = HandlerStack::create($mock);
-        $client = new Client(['handler' => $handlerStack]);
+        $client = Mockery::mock(Client::class);
+        $client->shouldNotReceive('get');
+
+        Log::shouldReceive('warning')
+            ->once()
+            ->with('SMS not sent: number or message is empty.');
 
         $sms = new SmsClient($client);
         $result = $sms->send('1234567890', '');
 
-        $this->assertTrue($result);
-
-        $lastRequest = $mock->getLastRequest();
-        parse_str($lastRequest->getUri()->getQuery(), $query);
-        $this->assertEquals('', $query['msg']);
+        $this->assertFalse($result);
     }
 
     #[Test]
@@ -337,5 +329,28 @@ class SmsClientTest extends TestCase
         $lastRequest = $mock->getLastRequest();
         parse_str($lastRequest->getUri()->getQuery(), $query);
         $this->assertEquals('Count: 42', $query['msg']);
+    }
+
+    #[Test]
+    public function it_preserves_placeholders_for_non_stringable_values()
+    {
+        config(['sms.enabled' => true]);
+        config(['sms.url' => 'http://example.com/api']);
+
+        $mock = new MockHandler([new Response(200, [], 'OK')]);
+        $handlerStack = HandlerStack::create($mock);
+        $client = new Client(['handler' => $handlerStack]);
+
+        $sms = new SmsClient($client);
+        $result = $sms->send('1234567890', 'Array: {{ items }}, Object: {{ obj }}', [
+            'items' => ['a', 'b'],
+            'obj' => null,
+        ]);
+
+        $this->assertTrue($result);
+
+        $lastRequest = $mock->getLastRequest();
+        parse_str($lastRequest->getUri()->getQuery(), $query);
+        $this->assertEquals('Array: {{ items }}, Object: {{ obj }}', $query['msg']);
     }
 }

@@ -71,7 +71,7 @@ class SmsIntegrationTest extends TestCase
     }
 
     #[Test]
-    public function it_applies_environment_configuration()
+    public function it_does_not_send_when_disabled_via_config()
     {
         config(['sms.enabled' => false]);
 
@@ -82,7 +82,7 @@ class SmsIntegrationTest extends TestCase
 
         /** @var SmsClient $sms */
         $sms = app(SmsClient::class);
-        $result = $sms->send('1234567890', 'Disabled by env');
+        $result = $sms->send('1234567890', 'Disabled by config');
 
         $this->assertTrue($result);
     }
